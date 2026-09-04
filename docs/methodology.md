@@ -12,8 +12,9 @@
 3. **Enrich geography** (`sql/03_enrich_geography.sql`) - joins postcode to
    local authority and region via the ONS Postcode Directory.
 4. **Enrich industry** (`sql/04_enrich_industry.sql`) - joins SIC
-   classification; this is where the fan-out incident (see
-   `docs/root_cause_analysis.md`) was found and fixed.
+   classification; this is where the deliberately introduced fan-out defect
+   (Incident 1 in `docs/root_cause_analysis.md`) is demonstrated, detected
+   and fixed.
 5. **Reconcile** (`sql/05_monthly_reconciliation.sql`) - month-on-month
    comparison, scoped honestly to what a single snapshot can support.
 6. **Validate** (`sql/06_data_quality_checks.sql`, `src/validate.py`,

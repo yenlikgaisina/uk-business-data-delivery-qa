@@ -39,8 +39,8 @@ is fictional; the underlying company, postcode and industry data is real.
   extract
 - Any month-on-month change greater than 5% in the delivered row count is
   investigated and explained before the delivery is released (see
-  `docs/root_cause_analysis.md` for how the +32% incident found while
-  building this pipeline was actually handled)
+  `docs/root_cause_analysis.md` for how the +32% fan-out defect - deliberately
+  introduced as a worked example - was detected and handled)
 
 ## Fields agreed for the final extract
 

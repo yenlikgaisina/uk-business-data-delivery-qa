@@ -1,16 +1,29 @@
 # Root cause analysis
 
-Two real incidents were found and resolved while building this pipeline.
-Both are left in the codebase deliberately (`sql/04_enrich_industry.sql`
-still contains the broken query, clearly labelled) rather than tidied away,
-because the investigation is the point.
+Two incidents are documented here. **Incident 1 was deliberately introduced**
+as part of this portfolio case study - a realistic delivery defect planted to
+demonstrate detection, root-cause analysis, remediation and regression
+testing. **Incident 2 is a genuine data-quality finding** in the real
+Companies House register, discovered through the QA process rather than
+planted.
+
+Both are left in the codebase (`sql/04_enrich_industry.sql` still contains
+the broken query, clearly labelled) rather than tidied away, because the
+investigation is the point.
 
 ---
 
 ## Incident 1: delivery row count 32% higher than expected
 
+> **Simulated, not a production incident.** This defect was written into the
+> pipeline on purpose, as a realistic worked example of a fault a data
+> delivery analyst genuinely does meet. The scenario is constructed; the
+> numbers below are not - they are the real output of running the broken
+> query against the real Companies House extract in `data/reference/`.
+
 **Detection.** The automated uniqueness check
-(`company_number` must appear exactly once) failed during a routine QA run.
+(`company_number` must appear exactly once) fails on the broken
+transformation.
 Expected row count (one per company in scope): **63,876**. Actual row count
 in the delivery candidate: **84,368** - 20,492 more rows than there should
 have been, a 32.1% inflation.
@@ -55,6 +68,10 @@ immediately rather than reach a client.
 ---
 
 ## Incident 2: 627 companies with a non-standard SIC code
+
+> **Real, not simulated.** Unlike Incident 1, nothing here was planted. These
+> are genuine characteristics of the live Companies House register that this
+> pipeline's QA surfaced, investigated and handled.
 
 **Detection.** The SIC-code format validity check
 (`sql/06_data_quality_checks.sql`) flagged 627 companies whose SIC code did
