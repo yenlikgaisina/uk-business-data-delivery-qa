@@ -11,9 +11,10 @@ recurring handover, not just a one-off analysis.
 
 Companies House publishes a new Free Company Data Product extract monthly
 (within the first few days of the month). Download it and replace
-`data/reference/companies_house_raw_extract.csv` with the newly scoped
+`data/reference/companies_house_raw_extract.csv.gz` with the newly scoped
 extract - `scripts/fetch_companies_house.py` followed by
-`scripts/scope_to_nottinghamshire.py` automate this (see `scripts/README.md`).
+`scripts/scope_to_nottinghamshire.py` automate this, including the
+compression step (see `scripts/README.md`).
 `data/reference/postcode_lookup.csv` and `lad_lookup.csv` only need
 refreshing if new postcodes appear in scope; ONS geography codes change
 rarely.
