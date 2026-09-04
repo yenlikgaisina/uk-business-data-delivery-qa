@@ -1,0 +1,6 @@
+delivery.duckdb
+raw_downloads/
+outputs/*.csv
+__pycache__/
+*.pyc
+.pytest_cache/
