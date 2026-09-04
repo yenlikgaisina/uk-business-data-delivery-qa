@@ -5,8 +5,8 @@ A monthly data delivery pipeline for a fictional client scenario, built on
 ingests, cleans, enriches, validates and delivers a company dataset the way
 a Data Analyst on a Data Delivery / data operations team actually would:
 with agreed requirements, a documented data dictionary, an automated QA
-gate, and two genuine data-quality incidents found and root-caused during
-the build rather than hidden.
+gate, and two fully documented incidents - one deliberately introduced as a
+worked example, one a real finding in the source register.
 
 This is a SQL and data-quality project, deliberately **not** a machine
 learning project - no models, no predictions, no training data. The skill
@@ -42,21 +42,21 @@ Full provenance, licences and match rates: [`data/reference/SOURCES.md`](data/re
 raw_companies ─┐
 postcode_lookup ├─► clean ─► enrich geography ─► enrich industry ─► reconcile ─► validate ─► deliver
 lad_lookup ─────┘                                       ▲
-                                            (SIC join fan-out found & fixed here -
-                                             see Root cause analysis below)
+                                     (deliberate SIC join fan-out demonstrated
+                                      & fixed here - see Root cause analysis)
 ```
 
 ```bash
 pip install -r requirements.txt
-python3 src/ingest.py            # load data/reference/*.csv → delivery.duckdb
+python3 src/ingest.py            # load data/reference/ extracts → delivery.duckdb
 python3 src/transform.py         # sql/02–05: clean, enrich, reconcile
 pytest tests/test_data_quality.py -v   # automated QA gate
 python3 src/validate.py          # human-readable outputs/qa_report.md
 python3 src/export_delivery.py   # sql/07 → outputs/client_delivery_full.csv
 ```
 
-Fully reproducible offline from the committed `data/reference/*.csv`
-extracts - no network access or API keys needed to run the pipeline itself.
+Fully reproducible offline from the committed `data/reference/` extracts - no
+network access or API keys needed to run the pipeline itself.
 Full stage-by-stage explanation: [`docs/methodology.md`](docs/methodology.md).
 Operational runbook for a recurring monthly release:
 [`docs/delivery_runbook.md`](docs/delivery_runbook.md).
@@ -135,7 +135,7 @@ data/
 sql/                01-07, run in order by src/transform.py and src/export_delivery.py
 src/                ingest.py, transform.py, validate.py, export_delivery.py
 tests/              automated QA gate (pytest)
-scripts/            one-off scripts originally used to build data/reference/*.csv
+scripts/            one-off scripts originally used to build data/reference/
 docs/               client_requirements, data_dictionary, root_cause_analysis,
                     methodology, delivery_runbook
 outputs/            qa_report.md, client_delivery_full.csv, reconciliation_report.csv
