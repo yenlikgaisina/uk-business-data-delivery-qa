@@ -1,6 +1,6 @@
 # Delivery QA Report
 
-Generated: 2026-09-04 20:14 UTC
+Generated: 2026-09-04 20:34 UTC
 Snapshot date: 2026-09-01 (Companies House data compiled to 31 Aug 2026)
 Scope: Nottinghamshire (Nottingham, Rushcliffe, Gedling, Broxtowe, Ashfield, Mansfield, Newark and Sherwood, Bassetlaw)
 
@@ -39,6 +39,8 @@ DELIVERY STATUS: APPROVED
   published open data (Companies House Free Company Data Product,
   2026-09-01 snapshot; ONS Postcode Directory Live; ONS Local Authority
   Districts April 2025). See docs/data_dictionary.md for full sourcing.
-- A deliberately broken transformation (a one-to-many SIC join that fans
-  out company rows) was found, root-caused and fixed during this pipeline's
-  build - see docs/root_cause_analysis.md.
+- Incident 1 in docs/root_cause_analysis.md (a one-to-many SIC join that
+  fans out company rows) is a DELIBERATELY INTRODUCED defect, included as a
+  worked example of QA detection, root-cause analysis and regression
+  control - not a real production incident. Incident 2 (legacy and missing
+  SIC codes, above) is a genuine finding in the source register.
