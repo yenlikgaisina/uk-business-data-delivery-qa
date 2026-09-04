@@ -4,11 +4,13 @@ name: data-readme
 # `data/`
 
 - **`reference/`** - the three input extracts this pipeline runs against:
-  `companies_house_raw_extract.csv`, `postcode_lookup.csv`, `lad_lookup.csv`,
+  `companies_house_raw_extract.csv.gz`, `postcode_lookup.csv`, `lad_lookup.csv`,
   plus `SOURCES.md` documenting exactly where each one came from. These are
   real, current open data (see `SOURCES.md`), scoped to Nottinghamshire and
   committed to the repository so the pipeline is reproducible without
-  network access - see `docs/methodology.md`.
+  network access - see `docs/methodology.md`. The companies extract is
+  gzip-compressed purely to keep the repository small (15MB -> ~2.5MB);
+  `src/ingest.py` reads it directly, no decompression step needed.
 - **`sample/`** - `client_delivery_sample.csv`, a 500-row sample of the final
   delivery (`ORDER BY company_number LIMIT 500`), committed so the delivery
   shape can be reviewed without regenerating the full 58k-row extract. The
