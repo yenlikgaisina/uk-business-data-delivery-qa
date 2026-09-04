@@ -61,20 +61,29 @@ Full stage-by-stage explanation: [`docs/methodology.md`](docs/methodology.md).
 Operational runbook for a recurring monthly release:
 [`docs/delivery_runbook.md`](docs/delivery_runbook.md).
 
-## Root cause analysis: a real bug, found by the QA gate
+## Root cause analysis
 
-While building this pipeline, the automated uniqueness check caught a
-genuine defect before it reached "delivery": joining companies to their SIC
-codes the naive way silently inflated the row count by **32%** (63,876 →
-84,368 rows) because ~20% of companies have more than one SIC code on file.
-Full incident write-up, including the fix and the regression test that now
-guards against it: [`docs/root_cause_analysis.md`](docs/root_cause_analysis.md).
+Two incidents are documented in
+[`docs/root_cause_analysis.md`](docs/root_cause_analysis.md) - one simulated,
+one real. Both are labelled as such, because being straight about which is
+which matters more than looking impressive.
 
-A second incident - 627 companies with non-standard SIC codes (legacy SIC
-2003 four-digit codes and Companies House's own `"None Supplied"`
-placeholder) - was investigated and shown to be a genuine, quantified
-upstream data-quality characteristic, not a pipeline bug. Also documented
-there.
+**Incident 1 (deliberately introduced).** A realistic delivery defect, built
+into the pipeline on purpose to demonstrate detection, root-cause analysis,
+remediation and regression testing: joining companies to their SIC codes the
+naive way inflates the row count by **32%** (63,876 → 84,368 rows), because
+~20% of companies have more than one SIC code on file. The broken query is
+kept in `sql/04_enrich_industry.sql`, clearly marked, immediately above the
+fix - the numbers quoted are the real output of running it against the real
+data. The automated uniqueness check catches it, and a regression test now
+prevents it recurring.
+
+**Incident 2 (a real finding in the source data).** 627 companies carry a
+non-standard SIC code - 140 legacy SIC 2003 four-digit codes and 487 with
+Companies House's own `"None Supplied"` placeholder. This one was not
+planted: it surfaced from the real Companies House register during QA, was
+investigated, quantified and handled explicitly rather than silently
+misclassified.
 
 ## Quality assurance
 
