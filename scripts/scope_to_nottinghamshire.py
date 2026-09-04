@@ -15,7 +15,10 @@ Reads:
     raw_downloads/lad_lookup.csv
 
 Writes the three files this repository actually ships with:
-    data/reference/companies_house_raw_extract.csv
+    data/reference/companies_house_raw_extract.csv.gz (gzip-compressed -
+        DuckDB's COPY TO and read_csv_auto both handle this by file
+        extension, purely to keep the repository small; the pipeline never
+        needs the decompressed file on disk)
     data/reference/postcode_lookup.csv
     data/reference/lad_lookup.csv
 """
@@ -81,7 +84,7 @@ def main():
 
     # Which company_numbers fall inside the Nottinghamshire scope, judged by
     # postcode -> LAD -> LAD name (this join is ONLY used to decide scope
-    # here; the shipped companies_house_raw_extract.csv stays un-enriched).
+    # here; the shipped companies_house_raw_extract.csv.gz stays un-enriched).
     con.execute(
         f"""
         CREATE TABLE in_scope AS
@@ -102,7 +105,7 @@ def main():
             SELECT {cols}
             FROM companies
             WHERE company_number IN (SELECT company_number FROM in_scope)
-        ) TO 'data/reference/companies_house_raw_extract.csv' (HEADER, DELIMITER ',')
+        ) TO 'data/reference/companies_house_raw_extract.csv.gz' (HEADER, DELIMITER ',')
         """
     )
 
