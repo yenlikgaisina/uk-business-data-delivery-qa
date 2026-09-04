@@ -100,9 +100,11 @@ def main():
     lines.append("  published open data (Companies House Free Company Data Product,")
     lines.append("  2026-09-01 snapshot; ONS Postcode Directory Live; ONS Local Authority")
     lines.append("  Districts April 2025). See docs/data_dictionary.md for full sourcing.")
-    lines.append("- A deliberately broken transformation (a one-to-many SIC join that fans")
-    lines.append("  out company rows) was found, root-caused and fixed during this pipeline's")
-    lines.append("  build - see docs/root_cause_analysis.md.")
+    lines.append("- Incident 1 in docs/root_cause_analysis.md (a one-to-many SIC join that")
+    lines.append("  fans out company rows) is a DELIBERATELY INTRODUCED defect, included as a")
+    lines.append("  worked example of QA detection, root-cause analysis and regression")
+    lines.append("  control - not a real production incident. Incident 2 (legacy and missing")
+    lines.append("  SIC codes, above) is a genuine finding in the source register.")
 
     with open("outputs/qa_report.md", "w") as f:
         f.write("\n".join(lines) + "\n")
