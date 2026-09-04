@@ -3,6 +3,10 @@ Loads the real source extracts into the DuckDB project database and creates
 the raw/reference table structure (sql/01_create_tables.sql), exactly as
 they were received - no cleaning happens here, that's sql/02 onward.
 
+companies_house_raw_extract.csv.gz is gzip-compressed in this repository
+purely to keep the repository small (15MB -> ~2.5MB); DuckDB's read_csv_auto
+reads gzip-compressed CSV transparently, so no decompression step is needed.
+
 Run from the project root: python3 src/ingest.py
 """
 import duckdb
@@ -24,7 +28,7 @@ def main():
             accounts_next_due_date, accounts_last_made_up_date, accounts_category,
             conf_stmt_next_due_date, conf_stmt_last_made_up_date,
             sic_text_1, sic_text_2, sic_text_3, sic_text_4
-        FROM read_csv_auto('data/reference/companies_house_raw_extract.csv', ALL_VARCHAR=TRUE)
+        FROM read_csv_auto('data/reference/companies_house_raw_extract.csv.gz', ALL_VARCHAR=TRUE)
     """)
     con.execute("""
         INSERT INTO postcode_lookup
